@@ -75,15 +75,14 @@ img {
 <div id="example" class="section level2">
 <h2>Example</h2>
 <p>The functions inside take the inverse of a matrix and store it for later re-use. First, generate a matrix, and create a list of functions for manipulating it.</p>
-<pre class="r"><code>library(MASS)
-source('cachematrix.R')
+<pre class="r"><code>source('cachematrix.R')
 rmat = matrix(runif(1000000), nrow=1000, ncol=1000)
 a &lt;- makeCacheMatrix(rmat)</code></pre>
 <p>Next, compute the matrix inverse. Repeated calls will not re-compute, but will instead use the cached result.</p>
 <pre class="r"><code>system.time(inv &lt;- cacheSolve(a))</code></pre>
 <pre><code>## Computing matrix inversion.</code></pre>
 <pre><code>##    user  system elapsed 
-##    3.46    0.00    3.45</code></pre>
+##    3.64    0.01    3.65</code></pre>
 <pre class="r"><code>system.time(inv &lt;- cacheSolve(a))</code></pre>
 <pre><code>## Using cached inversion.</code></pre>
 <pre><code>##    user  system elapsed 

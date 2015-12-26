@@ -8,9 +8,21 @@
 ## Venables, W. N. & Ripley, B. D. (2002) Modern Applied Statistics with S. 
 ## Fourth Edition. Springer, New York. ISBN 0-387-95457-0 
 
-## This function returns a list of functions for the storing and manipulating
-## the inverse of a particular matrix in memory.
+library(MASS) ## Include the MASS library
 
+## makeCacheMatrix <- function(x = matrix())
+## This function returns a list of functions for storing and manipulating
+## the inverse of a particular matrix in memory.
+## Inputs: 
+## 	x: A matrix. For the purposes of this assignment it is assumed square and 
+## 	invertible, although squareness is not a prerequisite in this code.
+## Outputs:
+##	list: A list of four functions that can be used to query and set the data
+##  stored in memory. 
+##		get: Returns the stored matrix.
+##		set: Stores the matrix x in memory and sets the inverse to null.
+##		getinv: Returns the inverse of the matrix.
+##		setinv: Sets the inverse of the matrix. 
 makeCacheMatrix <- function(x = matrix()) {
 	inv <- NULL
 	set <- function(y){ ## If we set the matrix, clear out the inverse.
@@ -29,19 +41,23 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
+## cacheSolve <- function(L, ...)
 ## This function returns the inverse of a matrix, but only performs the 
 ## inversion if it has not been computed previously. See the ginv function 
 ## from the MASS library for valid options of ...
-
-cacheSolve <- function(x, ...) {
-	inv <- x$getinv()
+## Inputs:
+##	L: The list output of makeCacheMatrix.
+## Outputs:
+##	inv: The inversion of the matrix accessed through L.
+cacheSolve <- function(L, ...) {
+	inv <- L$getinv()
 	if (!is.null(inv)){
 		message('Using cached inversion.')
 		return(inv)
 	}
 	message('Computing matrix inversion.')
-	data <- x$get()
+	data <- L$get()
 	inv <- ginv(data, ...)
-	x$setinv(inv)
+	L$setinv(inv)
 	return(inv) # Returning the inverse matrix.
 	}
