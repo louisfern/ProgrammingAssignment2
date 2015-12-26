@@ -1,0 +1,30 @@
+---
+title: "cachematrix.md"
+author: "LEF"
+date: "December 26, 2015"
+output: html_document
+---
+## Introduction
+cachematrix.R is my attempt at completing programming assignment 2 for the Coursera ['R Programming'](https://class.coursera.org/rprog-035) course, December 2015. Instead of using 'solve' to take the inverse, I am using 'ginv' from the MASS library (see References). This increases the difficulty in running the code, as you must have access to the MASS library, but ginv handles non-square matrices.
+
+## Example
+The functions inside take the inverse of a matrix and store it for later re-use. First, generate a matrix, and create a list of functions for manipulating it.
+```{r}
+library(MASS)
+source('cachematrix.R')
+rmat = matrix(runif(1000000), nrow=1000, ncol=1000)
+a <- makeCacheMatrix(rmat)
+
+```
+
+Next, compute the matrix inverse. Repeated calls will not re-compute, but will instead use the cached result. 
+
+```{r}
+system.time(inv <- cacheSolve(a))
+system.time(inv <- cacheSolve(a))
+```
+
+Note the difference in run time between computing and returning the cached version.
+
+## References
+Venables, W. N. & Ripley, B. D. (2002) Modern Applied Statistics with S. Fourth Edition. Springer, New York. ISBN 0-387-95457-0 
