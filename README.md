@@ -1,3 +1,6 @@
+### Ninja edit: See 'cachematrix.html' for the solution!
+
+
 ### Introduction
 
 This second programming assignment will require you to write an R
